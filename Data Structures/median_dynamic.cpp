@@ -24,6 +24,7 @@ typedef vector<pii > vpi;
 priority_queue<int> men;
 priority_queue<int, vector<int>, greater<int> > mai;
 
+// median() --> O(1)
 int median(){
 	if(men.size() > mai.size())
 		return men.top();
@@ -32,6 +33,7 @@ int median(){
 	
 }
 
+// push_median(x) --> O(1)
 void push_median(int x){
 	if(men.size() <= mai.size())
 		men.push(x);
