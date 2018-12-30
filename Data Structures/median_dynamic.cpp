@@ -2,25 +2,6 @@
 
 using namespace std;
 
-typedef long long   ll;
-typedef pair<ll, ll> pii;
-typedef vector<int> vi;
-typedef vector<ll> vll;
-typedef vector<pii > vpi;
-
-#define F first
-#define S second
-#define PB push_back
-#define MP make_pair
-#define INF 0x3f3f3f3f
-#define INFLL 0x3f3f3f3f3f3f3f3f
-#define all(x) x.begin(),x.end()
-#define MOD 1000000007LL
-#define endl '\n'
-#define mdc(a, b) (__gcd((a), (b)))
-#define mmc(a, b) (((a)*(b))/__gcd((a), (b)))
-#define MAXN 110
-
 priority_queue<int> men;
 priority_queue<int, vector<int>, greater<int> > mai;
 
