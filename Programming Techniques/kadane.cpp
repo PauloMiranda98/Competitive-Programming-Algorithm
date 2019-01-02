@@ -7,30 +7,30 @@ typedef long long ll;
 
 ll kadane(vector<int> v){
 	
-	ll resp = 0LL, maior = 0;
+	ll ans = 0LL, bigger = 0LL;
 	
 	for(int i=0; i < int(v.size()); i++){
-		maior = max(0LL, maior + ll(v[i]));		
-		resp = max(resp, maior);
+		bigger = max(0LL, bigger + ll(v[i]));		
+		ans = max(ans, bigger);
 	}
 	
-	return resp;
+	return ans;
 }
 
 //Circular Kadane: O(N)
 
-ll circular_kadane(vector<int> v){
-	ll resp1 = kadane(v);
+ll circularKadane(vector<int> v){
+	ll ans1 = kadane(v);
 	
 	ll sum = 0LL;
 	for(int i=0; i < int(v.size()); i++){
-		sum += v[i];
-		v[i] *= -1;
+		sum += ll(v[i]);
+		v[i] = -v[i];
 	}
 	
-	ll resp2 = sum + kadane(v);
+	ll ans2 = sum + kadane(v);
 
-	return max(resp1, resp2);
+	return max(ans1, ans2);
 	
 }
 
@@ -49,7 +49,7 @@ int main() {
 	}
 	
 	cout << kadane(v) << endl;
-	cout << circular_kadane(v) << endl;
+	cout << circularKadane(v) << endl;
 					
 	return 0;
 	

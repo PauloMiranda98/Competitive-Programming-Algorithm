@@ -2,8 +2,8 @@
 
 using namespace std;
 
-priority_queue<int> men;
-priority_queue<int, vector<int>, greater<int> > mai;
+priority_queue<int> men; //smallest numbers
+priority_queue<int, vector<int>, greater<int> > mai; //largest numbers
 
 // median() --> O(1)
 int median(){
@@ -15,7 +15,7 @@ int median(){
 }
 
 // push_median(x) --> O(1)
-void push_median(int x){
+void pushMedian(int x){
 	if(men.size() <= mai.size())
 		men.push(x);
 	else
@@ -39,7 +39,7 @@ int main() {
 	int x;
 	
 	while(cin >> x){
-		push_median(x);
+		pushMedian(x);
 		cout << median() << endl;	
 	}
 				
