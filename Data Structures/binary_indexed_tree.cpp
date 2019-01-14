@@ -19,6 +19,22 @@ int query(int i){
 	return s;
 }
 
+//Query2: O(log(n))
+int query2(int v){
+	int sum = 0;
+	int pos = 0;
+	#define LOGN 19
+	
+	for(int i=LOGN; i>=0; i--){
+		if( (pos + (1 << i) <= n) and (sum + tree[pos + (1 << i)] < v) ){
+			sum += tree[pos + (1 << i)];
+			pos += (1 << i);
+		}
+	}
+
+	return pos + 1;
+}
+
 //update: O(log(n)), sum value in v[i]
 void update(int i, int value){	
 	v[i] += value;

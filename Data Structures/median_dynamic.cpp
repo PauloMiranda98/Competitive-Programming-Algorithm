@@ -11,7 +11,6 @@ int median(){
 		return men.top();
 	else
 		return (men.top() + mai.top())/2;
-	
 }
 
 // push_median(x) --> O(1)
