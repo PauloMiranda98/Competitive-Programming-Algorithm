@@ -1,12 +1,10 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-typedef long long ll;
 
 #define MAXN 200010
+#define MAXM 200010
 
-struct UnionFind{
-	
+struct UnionFind{	
 	int n, anc[MAXN], w[MAXN], sz[MAXN];
 
 	UnionFind(){
@@ -56,26 +54,44 @@ struct UnionFind{
 	}
 };
 
-UnionFind uf;
+int n, m;
+
+typedef long long ll;
+typedef tuple<ll, int, int> tp;
+
+tp edgeList[MAXM];
+
+ll kruskal() {
+	ll cost = 0;
+	UnionFind uf;
+	
+	sort(edgeList, edgeList + m);
+	
+	for(int i = 0; i < m; i++) {
+		int u, v; ll c;
+		tie(c, u, v) = edgeList[i];
+		
+		if(!uf.isSame(u, v ) ) { 
+			cost += c;
+			uf.join(u, v);
+		}
+	}
+	
+	return cost;
+}
 
 int main() {
-	
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
-		
-	cin >> uf.n;
+	cin >> n >> m;
 	
-	int q;
-	cin >> q;
-	
-	for(int i=0; i<q; i++){
-		int a, b;
-		cin >> a >> b;
-		uf.join(a, b);
-		
-		cout << uf.size(a) << endl;
+	for(int i=0; i<m; i++){
+		int u, v; ll w;
+		cin >> u >> v >> w;
+		edgeList[i] = tp(w, u, v);
 	}
-		
-	return 0;
 	
+	cout << kruskal() << endl;
+	
+	return 0;
 }

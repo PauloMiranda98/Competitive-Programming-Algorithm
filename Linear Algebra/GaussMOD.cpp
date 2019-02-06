@@ -4,10 +4,7 @@ using namespace std;
 typedef long long   ll;
 typedef pair<int,int> pii;
 typedef pair<ll, ll> pll;
-const long double EPS = 1e-9;
 const int INF = 0x3f3f3f3f;
-//typedef long double ld;
-//#define double ld
 
 template <typename T>
 T extGcd(T a, T b, T& x, T& y) {

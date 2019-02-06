@@ -33,7 +33,7 @@ struct GaussXOR {
 
 	void add(int x) {
 		for(int i = me-1; i >= 0; i--) {
-			if(table[i] == 0) {
+			if( (table[i] == 0) and (x & (1<<i)/*(1LL<<i)*/) ){
 				table[i] = x;
 				x = 0;
 			} else {
@@ -43,18 +43,10 @@ struct GaussXOR {
 	}
 
 	int max(){
-		sort(table, table + me);
-		for(int i = me-1; i >= 0; i--) {
-			for(int j=me-1; j >= 0; j--){
-				if(i != j)
-					table[j] = std::min(table[j], table[j] ^ table[i]);
-			}
-		}
-		
 		int ans = 0;
-		for(int i = 0; i < me; i++) {
-			ans ^= table[i];
-		}
+		for(int i = me-1; i >= 0; i--) {
+			ans = std::max(ans, ans ^ table[i]);
+		}		
 		
 		return ans;		
 	}
