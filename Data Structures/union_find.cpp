@@ -6,11 +6,11 @@ typedef long long ll;
 #define MAXN 200010
 
 struct UnionFind{
-	
-	int n, anc[MAXN], w[MAXN], sz[MAXN];
+	#define NUF MAXN 
+	int anc[NUF], w[NUF], sz[NUF];
 
 	UnionFind(){
-		for(int i=1; i<MAXN; i++){
+		for(int i=1; i<NUF; i++){
 			anc[i] = i;
 			w[i] = 1;
 			sz[i] = 1;
@@ -57,13 +57,14 @@ struct UnionFind{
 };
 
 UnionFind uf;
+int n;
 
 int main() {
 	
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 		
-	cin >> uf.n;
+	cin >> n;
 	
 	int q;
 	cin >> q;

@@ -175,31 +175,41 @@ ll modInv(ll a, ll m) {
 
 //const ll MOD = 1000000007LL;
 
-ll fmod(ll b, ll exp = MOD-2LL){
-    ll ans = 1LL;
+inline int modMul(int a, int b) {
+	#if !defined(_WIN32) || defined(_WIN64)
+		return (int) ((long long) a * b % MOD);
+	#endif
+	unsigned long long x = (long long) a * b;
+	unsigned xh = (unsigned) (x >> 32), xl = (unsigned) x, d, m;
+	asm(
+		"divl %4; \n\t"
+		: "=a" (d), "=d" (m)
+		: "d" (xh), "a" (xl), "r" (MOD)
+	);
+	return m;
+}
+
+int fastMod(int b, ll exp = MOD-2LL){
+    int ans = 1;
     while(exp){
 		if(exp & 1LL)
-			ans = (ans*b)%MOD;
-		b = (b*b)%MOD;
-		exp /= 2ll;
+			ans = modMul(ans, b);
+		b = modMul(b, b);
+		exp >>= 1;
     }
     return ans;
 }
 
-inline ll modInvPow(ll a) {
-	return fmod(a, MOD-2LL);
+inline int modInvPow(int a) {
+	return fastMod(a, MOD-2);
 }	
 
-inline ll modDiv(ll a, ll b) {
-	return (a * modInvPow(b)) % MOD;
+inline int modDiv(int a, int b) {
+	return modMul(a, modInvPow(b));
 }
 
-inline ll modMul(ll a, ll b) {
-	return (a * b) % MOD;
-}
-
-inline ll modSum(ll a, ll b) {
-	ll x = a+b;
+inline int modSum(int a, int b) {
+	int x = a+b;
 
 	if(x >= MOD)
 		return x-MOD;
@@ -207,8 +217,8 @@ inline ll modSum(ll a, ll b) {
 		return x;
 }
 
-inline ll modSub(ll a, ll b) {
-	ll x = a-b;
+inline int modSub(int a, int b) {
+	int x = a-b;
 
 	if(x < 0) 
 		return x+MOD;

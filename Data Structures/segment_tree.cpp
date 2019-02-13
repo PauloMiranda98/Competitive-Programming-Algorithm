@@ -5,63 +5,88 @@ typedef long long ll;
 
 #define MAXN 200010
 
-int n, v[MAXN], tree[4*MAXN];
-int neutral = -0x3f3f3f3f;
+struct SegTree{
 
-int join(int a, int b){
-	return max(a, b);
-}
+	#define NSeg MAXN
+	typedef int Node;
+	 
+	int n, *v;
+	
+	Node tree[4*NSeg];
+	Node neutral = 0;
 
-//Build: O(4*n) -> O(n); call -> build(1, 1, n)
-void build(int node, int i, int j){
-	if(i == j){
-		tree[node] = v[i];
-		return;
+	Node join(Node a, Node b){
+		return (a + b);
 	}
-	int m = (i+j)/2;
-	
-	int l = (node<<1);
-	int r = l + 1;
-	
-	build(l, i, m);
-	build(r, m+1, j);
-	
-	tree[node] = join(tree[l], tree[r]);
-}
 
-//Query: O(log(n)); call -> query(1, 1, n, a, b)
-int query(int node, int i, int j, int a, int b){
-	if( (i>b) or (j<a) )
-		return neutral;
-	if( (a<=i) and (j<=b) )
-		return tree[node];
+	//Build: O(4*n) -> O(n); call -> build(1, 1, n)
+	void build(int node, int i, int j){
+		if(i == j){
+			tree[node] = v[i];
+			return;
+		}
+		int m = (i+j)/2;
 		
-	int m = (i+j)/2;
-	
-	int l = (node<<1);
-	int r = l + 1;
-	
-	return join( query(l, i, m, a, b), query(r, m+1, j, a, b) );
-}
+		int l = (node<<1);
+		int r = l + 1;
+		
+		build(l, i, m);
+		build(r, m+1, j);
+		
+		tree[node] = join(tree[l], tree[r]);
+	}
 
-//Update: O(log(n)); call -> update(1, 1, n, index, value)
-void update(int node, int i, int j, int index, int value){
-	if(i == j){
-		tree[node] = v[index] = value;
-		return;
-	}		
-	int m = (i+j)/2;
+	//Query: O(log(n)); call -> query(1, 1, n, a, b)
+	Node query(int node, int i, int j, int a, int b){
+		if( (i>b) or (j<a) )
+			return neutral;
+		if( (a<=i) and (j<=b) )
+			return tree[node];
+			
+		int m = (i+j)/2;
+		
+		int l = (node<<1);
+		int r = l + 1;
+		
+		return join( query(l, i, m, a, b), query(r, m+1, j, a, b) );
+	}
+
+	//Update: O(log(n)); call -> update(1, 1, n, index, value)
+	void update(int node, int i, int j, int index, int value){
+		if(i == j){
+			tree[node] = v[index] = value;
+			return;
+		}		
+		int m = (i+j)/2;
+		
+		int l = (node<<1);
+		int r = l + 1;
+		
+		if(index <= m)
+			update(l, i, m, index, value);
+		else
+			update(r, m+1, j, index, value);		
+		
+		tree[node] = join(tree[l], tree[r]);
+	}
 	
-	int l = (node<<1);
-	int r = l + 1;
+	void build(int _v[], int _n){
+		n = _n;
+		v = _v;
+		build(1, 1, n);
+	}
 	
-	if(index <= m)
-		update(l, i, m, index, value);
-	else
-		update(r, m+1, j, index, value);		
+	int query(int a, int b){
+		return query(1, 1, n, a, b);
+	}
 	
-	tree[node] = join(tree[l], tree[r]);
-}
+	void update(int i, int value){
+		update(1, 1, n, i, value);
+	}
+};
+
+SegTree st;
+int n, v[MAXN];
 
 int main() {
 	
@@ -74,7 +99,7 @@ int main() {
 		cin >> v[i];
 	}
 	
-	build(1, 1, n);
+	st.build(v, n);
 	
 	int q;
 	cin >> q;
@@ -86,11 +111,11 @@ int main() {
 		if(op == 'q'){
 			int a, b;
 			cin >> a >> b;
-			cout << query(1, 1, n, a, b) << endl;
+			cout << st.query(a, b) << endl;
 		}else{
 			int index, value;
 			cin >> index >> value;
-			update(1, 1, n, index, value);	
+			st.update(index, value);	
 		}
 	}
 		

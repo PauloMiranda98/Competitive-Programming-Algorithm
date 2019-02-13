@@ -2,34 +2,39 @@
 
 using namespace std;
 
-priority_queue<int> men; //smallest numbers
-priority_queue<int, vector<int>, greater<int> > mai; //largest numbers
+struct MedianDinamic{
+	priority_queue<int> men; //smallest numbers
+	priority_queue<int, vector<int>, greater<int> > mai; //largest numbers
 
-// median() --> O(1)
-int median(){
-	if(men.size() > mai.size())
-		return men.top();
-	else
-		return (men.top() + mai.top())/2;
-}
+	// median() --> O(1)
+	int median(){
+		if(men.size() > mai.size())
+			return men.top();
+		else
+			return (men.top() + mai.top())/2;
+	}
 
-// push_median(x) --> O(1)
-void pushMedian(int x){
-	if(men.size() <= mai.size())
-		men.push(x);
-	else
-		mai.push(x);
-		
-	if((!mai.empty()) and (!men.empty())){
-		while(men.top() > mai.top()){
-			int a = mai.top(); mai.pop();
-			int b = men.top(); men.pop();
+	// push_median(x) --> O(1)
+	void pushMedian(int x){
+		if(men.size() <= mai.size())
+			men.push(x);
+		else
+			mai.push(x);
 			
-			mai.push(b);
-			men.push(a);
-		}
-	}	
-}
+		if((!mai.empty()) and (!men.empty())){
+			while(men.top() > mai.top()){
+				int a = mai.top(); mai.pop();
+				int b = men.top(); men.pop();
+				
+				mai.push(b);
+				men.push(a);
+			}
+		}	
+	}
+
+};
+
+MedianDinamic md;
 
 int main() {
 	
@@ -38,8 +43,8 @@ int main() {
 	int x;
 	
 	while(cin >> x){
-		pushMedian(x);
-		cout << median() << endl;	
+		md.pushMedian(x);
+		cout << md.median() << endl;	
 	}
 				
 	return 0;

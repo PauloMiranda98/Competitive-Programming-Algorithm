@@ -6,7 +6,6 @@ typedef long long ll;
 
 #define INF 0x3f3f3f3f
 
-
 // Counting Inversions: O(N*log(N))
 ll ci(vector<int> &v){
 	
