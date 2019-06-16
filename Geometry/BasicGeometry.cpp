@@ -6,7 +6,7 @@ typedef long double  ld;
 typedef pair<int,int> pii;
 typedef pair<ll, ll> pll;
 
-typedef int ftype;
+typedef ll ftype;
 
 //Point2D
 struct point2d {
@@ -77,11 +77,11 @@ double dist(point2d a, point2d b){
 	return abs(a - b);
 }
 
-double dist(point2d a, point2d l1, point2d l2){
+double dist(point2d a, point2d pl1, point2d pl2){
 	//crs = parallelogram area
-	double crs = cross(point2d(a - l1), point2d(l2 - l1));
+	double crs = cross(point2d(a - pl1), point2d(pl2 - pl1));
 	//h = area/base
-	return abs(crs/dist(l1, l2));
+	return abs(crs/dist(pl1, pl2));
 }
 
 double area(vector <point2d> p){
@@ -91,6 +91,28 @@ double area(vector <point2d> p){
 		ret += cross(p[i] - p[0], p[i - 1] - p[0])/2.0;
 
 	return abs(ret);
+}
+
+int signed_area_parallelogram(point2d p1, point2d p2, point2d p3) {
+    return cross(p2 - p1, p3 - p2);
+}
+
+double triangle_area(point2d p1, point2d p2, point2d p3) {
+    return abs(signed_area_parallelogram(p1, p2, p3)) / 2.0;
+}
+
+bool pointInTriangle(point2d a, point2d b, point2d c, point2d p){
+    long long s1 = abs(cross(b-a, c-a));
+    long long s2 = abs(cross(a-p, b-p)) + abs(cross(b-p, c-p)) + abs(cross(c-p, a-p));
+    return s1 == s2;
+}
+
+bool clockwise(point2d p1, point2d p2, point2d p3) {
+    return signed_area_parallelogram(p1, p2, p3) < 0;
+}
+
+bool counter_clockwise(point2d p1, point2d p2, point2d p3) {
+    return signed_area_parallelogram(p1, p2, p3) > 0;
 }
 	
 //Point3D
