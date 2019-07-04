@@ -14,15 +14,15 @@ struct point2d {
 };
 
 bool cmp(point2d a, point2d b) {
-    return (a.x < b.x) or ((a.x == b.x) and (a.y < b.y));
+	return (a.x < b.x) or ((a.x == b.x) and (a.y < b.y));
 }
 
 bool eq(point2d a, point2d b) {
-    return (a.x == b.x) and (a.y == b.y);
+	return (a.x == b.x) and (a.y == b.y);
 }
 
 ftype cross(point2d a, point2d b) {
-    return a.x * b.y - a.y * b.x;
+	return a.x * b.y - a.y * b.x;
 }
 
 point2d operator -(point2d a, point2d b){
@@ -68,11 +68,11 @@ vector<point2d> convex_hull(vector<point2d> a) {
     a.clear();
     for(int i = 0; i < (int)up.size(); i++){
         a.push_back(up[i]);
-	}
+    }
     for(int i = down.size() - 2; i > 0; i--){
         a.push_back(down[i]);
-	}
-	return a;
+    }
+    return a;
 }
 
 ftype norm(point2d a){

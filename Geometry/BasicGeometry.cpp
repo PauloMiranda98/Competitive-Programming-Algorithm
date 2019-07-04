@@ -93,6 +93,16 @@ double area(vector <point2d> p){
 	return abs(ret);
 }
 
+double area2(const vector<point2d> vp) {
+    double res = 0;
+    for (unsigned i = 0; i < vp.size(); i++) {
+        point2d p = i ? vp[i - 1] : vp.back();
+        point2d q = vp[i];
+        res += (p.x - q.x) * (p.y + q.y);
+    }
+    return fabs(res) / 2;
+}
+
 int signed_area_parallelogram(point2d p1, point2d p2, point2d p3) {
     return cross(p2 - p1, p3 - p2);
 }
