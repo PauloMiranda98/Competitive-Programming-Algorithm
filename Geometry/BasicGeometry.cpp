@@ -60,21 +60,31 @@ ftype norm(point2d a) {
 double abs(point2d a) {
     return sqrt(norm(a));
 }
+double dist(point2d a, point2d b){
+	return abs(a - b);
+}
+
 double proj(point2d a, point2d b) {
     return dot(a, b) / abs(b);
 }
 double angle(point2d a, point2d b) {
     return acos(dot(a, b) / abs(a) / abs(b));
 }
+
+point2d rotate(point2d p, double ang){
+	return point2d(p.x*cos(ang) - p.y*sin(ang), p.x*sin(ang) + p.y*cos(ang));
+}
+
+point2d perp(point2d a) {
+    return point2d(-a.y, a.x);
+}
+
 ftype cross(point2d a, point2d b) {
     return a.x * b.y - a.y * b.x;
 }
 //Line parameterized: r1 = a1 + t*d1
 point2d intersect(point2d a1, point2d d1, point2d a2, point2d d2) {
     return a1 + cross(a2 - a1, d2) / cross(d1, d2) * d1;
-}
-double dist(point2d a, point2d b){
-	return abs(a - b);
 }
 
 double dist(point2d a, point2d pl1, point2d pl2){

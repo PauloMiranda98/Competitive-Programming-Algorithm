@@ -5,6 +5,9 @@ using namespace std;
 typedef long long  ll;
 typedef ll ftype;
 
+const double PI = acos(-1);
+const double EPS = 1e-9;
+
 //Point2D
 struct point2d {
     ftype x, y;
@@ -75,9 +78,19 @@ vector<point2d> convex_hull(vector<point2d> a) {
     return a;
 }
 
-ftype norm(point2d a){
-	return a.x*a.x + a.y*a.y;
+ftype dot(point2d a, point2d b) {
+    return a.x * b.x + a.y * b.y;
 }
+ftype norm(point2d a) {
+    return dot(a, a);
+}
+double abs(point2d a) {
+    return sqrt(norm(a));
+}
+double angle(point2d a, point2d b) {
+    return acos(dot(a, b) / abs(a) / abs(b));
+}
+
 
 bool pointInTriangle(point2d a, point2d b, point2d c, point2d p){
     ftype s1 = abs(cross(b-a, c-a));
@@ -92,11 +105,15 @@ int sgn(ftype val){
 struct Polygon{
 	vector<point2d> vp;
 	
-	Polygon(vector<point2d> &aux){
-		vp = convex_hull(aux);
+	Polygon(vector<point2d> aux){
+		vp = aux;
 	}
 	
-	bool pointIn(point2d point){					
+	void to_convex_hull(){
+		vp = convex_hull(vp);
+	}
+	
+	bool pointInConvex(point2d point){					
 		if(cross(vp[1]-vp[0], point-vp[0]) != 0 && sgn(cross(vp[1]-vp[0], point-vp[0]) ) != sgn(cross(vp[1]-vp[0], vp.back()-vp[0])) )
 			return false;
 		if(cross(vp.back()-vp[0], point-vp[0]) != 0 && sgn(cross(vp.back()-vp[0], point-vp[0]) ) != sgn(cross(vp.back() - vp[0], vp[1]-vp[0])) )
@@ -121,6 +138,26 @@ struct Polygon{
 		return pointInTriangle(vp[0], vp[pos], vp[pos+1], point);
 	}	
 
+	bool pointInConcave(point2d point){					
+		int sz = vp.size();
+		if(sz == 0)
+			return false;
+
+		double sum = 0;
+		vp.push_back(vp[0]);
+
+		for(int i=0; i<sz; i++){
+			if(ccw(point, vp[i], vp[i+1]))
+				sum += angle(vp[i]-point, vp[i+1]-point);
+			else
+				sum -= angle(vp[i]-point, vp[i+1]-point);
+		}
+		
+		vp.pop_back();
+		return fabs(fabs(sum) - 2*PI) < EPS;
+	}
+
+
 };
 
 int main() {
@@ -135,6 +172,8 @@ int main() {
 	}
 	Polygon pol(v);
 
+	pol.to_convex_hull();
+
 	cout << "Convex Hull: ";
 	cout << pol.vp.size() << endl;
 
@@ -144,8 +183,8 @@ int main() {
 	cout << "Point In Polygon: "<< endl;
 	point2d p;
 	cin >> p.x >> p.y;
-	
-	cout << pol.pointIn(p) << endl;
+			
+	cout << pol.pointInConvex(p) << endl;
 	
 	return 0;
 }

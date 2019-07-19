@@ -12,6 +12,11 @@ struct BIT{
 	int tree[NBIT];
 	
 	//QueryV: O(log(n)), returns the sum of 1 to i
+	
+	BIT(){
+		memset(tree, 0, sizeof(tree));
+	}
+	
 	int queryV(int i){	
 		int s = 0;
 
@@ -22,6 +27,10 @@ struct BIT{
 		
 		return s;
 	}
+
+	int queryV(int l, int r){
+		return queryV(r) - queryV(l-1);
+	}	
 
 	//QueryP: O(log(n))
 	int queryP(int v){

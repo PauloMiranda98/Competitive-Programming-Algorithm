@@ -11,6 +11,10 @@ struct BIT2D{
 	#define MBIT MAXN
 	
 	int tree[NBIT][MBIT];
+	
+	BIT2D(){
+		memset(tree, 0, sizeof(tree));	
+	}
 
 	//Query: O(log(n*m))
 	int query(int i, int j){	

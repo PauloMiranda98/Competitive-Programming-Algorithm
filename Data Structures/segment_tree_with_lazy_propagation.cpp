@@ -6,20 +6,32 @@ typedef long long ll;
  
 struct SegTreeLazy{
 
-	#define NSeg MAXN
+	#define NSeg 4*MAXN
 	typedef int Node;
 	
 	int n;
 	int *v;
 
-	Node tree[4*NSeg];
+	Node tree[NSeg];
 	Node neutral = 0;
-	int lazy[4*NSeg];
+	int lazy[NSeg];
 		
-	Node join(Node a, Node b){
+	inline Node join(Node a, Node b){
 		return a+b;
 	}
-
+	
+	inline void upLazy(int &node, int &i, int &j){
+		if(lazy[node] != 0){
+			tree[node] += lazy[node]*(j-i+1);		
+			//tree[node] += lazy[node];
+			
+			if(i != j){				
+				lazy[(node<<1)] += lazy[node];
+				lazy[(node<<1)+1] += lazy[node];			
+			}
+			lazy[node] = 0;
+		}
+	}
 	//Build: O(4*n) -> O(n); call -> build(1, 1, n)
 	void build(int node, int i, int j){
 		lazy[node] = 0;
@@ -44,17 +56,8 @@ struct SegTreeLazy{
 		int l = (node<<1);
 		int r = l + 1;
 		
-		if(lazy[node] != 0){
-			tree[node] += lazy[node]*(j-i+1);		
-			//tree[node] += lazy[node];
-			
-			if(i != j){
-				lazy[l] += lazy[node];
-				lazy[r] += lazy[node];			
-			}
-			lazy[node] = 0;
-		}
-		
+		upLazy(node, i, j);
+				
 		if( (i>b) or (j<a) )
 			return neutral;
 
@@ -72,30 +75,14 @@ struct SegTreeLazy{
 		int l = (node<<1);
 		int r = l + 1;
 		
-		if(lazy[node] != 0){
-			tree[node] += lazy[node]*(j-i+1);		
-			//tree[node] += lazy[node];
-			
-			if(i < j){
-				lazy[l] += lazy[node];
-				lazy[r] += lazy[node];			
-			}
-			
-			lazy[node] = 0;
-		}
+		upLazy(node, i, j);
 
 		if( (i>j) or (i>b) or (j<a) )
 			return;
 
 		if( (a<=i) and (j<=b) ){
-			tree[node] += value*(j-i+1);		
-			//tree[node] += value;
-			
-			if(i != j){
-				lazy[l] += value;
-				lazy[r] += value;			
-			}
-			
+			lazy[node] = value;
+			upLazy(node, i, j);
 		}else{
 			int m = (i+j)/2;
 			

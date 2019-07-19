@@ -19,6 +19,12 @@ struct point2d {
     point2d() {}
     point2d(ftype x, ftype y): x(x), y(y) {}
 
+    point2d& operator=(const point2d &t) {
+        x = t.x;
+        y = t.y;
+        return *this;
+    }
+
     point2d& operator+=(const point2d &t) {
         x += t.x;
         y += t.y;
@@ -78,6 +84,43 @@ struct LineFloat{
 	}
 
 };
+
+ftype cross(point2d a, point2d b) {
+    return a.x * b.y - a.y * b.x;
+}
+ftype norm(point2d a) {
+    return a.x*a.x + a.y*a.y;
+}
+double abs(point2d a) {
+    return sqrt(norm(a));
+}
+double dist(point2d a, point2d b){
+	return abs(a - b);
+}
+
+Circle circumCircle(point2d a, point2d b, point2d c){
+	point2d u( (b-a).y, -((b-a).x) );
+	point2d v( (c-a).y, -((c-a).x) );
+	point2d n = (c-b)*0.5;
+
+	double t = cross(u, n)/cross(v, u);
+	point2d ct = (((a+c)*0.5) + (v*t));
+	double r = dist(ct, a);
+
+	return Circle(ct.x, ct.y, r);
+}
+
+Circle inCircle(point2d a, point2d b, point2d c){
+	double m1 = dist(a, b);
+	double m2 = dist(a, c);
+	double m3 = dist(b, c);
+	point2d ct = ((c*m1) + (b*m2) + a*(m3))/(m1+m2+m3);
+	
+	double sp = 0.5*(m1+m2+m3);
+	double r = sqrt(sp*(sp-m1)*(sp-m2)*(sp-m3))/sp;
+
+	return Circle(ct.x, ct.y, r);
+}
 
 int circle_line_intersection(Circle circ, LineFloat line, double &ax, double &ay, double &bx, double &by){
 	double r = circ.r;	
