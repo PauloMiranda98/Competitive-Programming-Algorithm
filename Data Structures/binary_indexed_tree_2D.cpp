@@ -48,11 +48,7 @@ BIT2D bit;
 int mat[MAXN][MAXM];
 int n, m;
 
-int main() {
-	
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-		
+int main() {		
 	cin >> n >> m;
 	
 	for(int i=1; i<=n; i++){

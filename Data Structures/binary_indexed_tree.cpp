@@ -5,8 +5,7 @@ typedef long long ll;
 
 #define MAXN 200010
 
-struct BIT{
-	
+struct BIT{	
 	#define NBIT MAXN
 	
 	int tree[NBIT];
@@ -61,11 +60,7 @@ struct BIT{
 BIT bit;
 int n, v[MAXN];
 
-int main() {
-	
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-		
+int main() {		
 	cin >> n;
 
 	for(int i=1; i <= n; i++){

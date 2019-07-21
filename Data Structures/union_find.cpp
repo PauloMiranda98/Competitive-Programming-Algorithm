@@ -36,19 +36,15 @@ struct UnionFind{
 		
 		if(x == y)
 			return;
-		
-		if(w[x] < w[y]){
-			anc[x] = y;
-			sz[y] += sz[x];
-		}else if(w[x] > w[y]){
-			anc[y] = x;
-			sz[x] += sz[y];
-		}else{        
-			anc[x] = y;
-			sz[y] += sz[x];
 			
-			w[y]++;
-		}
+		if(w[x] > w[y])
+			swap(x, y);		
+		
+		anc[x] = y;
+		sz[y] += sz[x];
+		
+		if(w[x] == w[y])
+			w[y]++;			
 	}
 	
 	int size(int x){
@@ -59,11 +55,7 @@ struct UnionFind{
 UnionFind uf;
 int n;
 
-int main() {
-	
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-		
+int main() {		
 	cin >> n;
 	
 	int q;

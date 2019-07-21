@@ -28,10 +28,7 @@ struct StackMin{
 	
 };
 
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	
+int main() {	
 	StackMin sm;
 	
 	int q;

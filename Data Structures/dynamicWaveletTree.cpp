@@ -261,9 +261,6 @@ int v[N];
 int n, k, q, l, r, id, x;
 
 int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-
 	wavelet t(0, MAX); //0-index
 
 	cin >> n;

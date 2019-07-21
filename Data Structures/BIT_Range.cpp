@@ -39,11 +39,7 @@ BIT_Range bit(MAXN);
 
 int n, v[MAXN];
 
-int main() {
-	
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-		
+int main() {		
 	cin >> n;
 
 	for(int i=1; i <= n; i++){
