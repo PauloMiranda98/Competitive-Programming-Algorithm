@@ -95,7 +95,7 @@ int main() {
     f_type k, b, n;
     cin >> k >> b >> n;
 
-	cout << count_lattices(Fraction(k, 1), Fraction(b, 1), n) << endl;	
+    cout << count_lattices(Fraction(k, 1), Fraction(b, 1), n) << endl;	
 	
     return 0;
 }

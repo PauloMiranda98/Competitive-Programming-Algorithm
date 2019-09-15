@@ -25,7 +25,7 @@ struct QueueMin{
 		}
 		s2.pop();	
 	}
-	t_queue top(){
+	t_queue front(){
 		return s2.top().first;
 	}
 	t_queue min(){

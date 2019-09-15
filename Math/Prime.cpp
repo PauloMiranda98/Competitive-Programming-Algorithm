@@ -121,16 +121,15 @@ ll numDiv(ll N) {
 }
 
 ll powFast(ll x, ll e){
-	if(e == 0)
-		return 1LL;
-	if(e == 1)
-		return x;
-		
-	ll ans = powFast(x, e/2);
-	ans = ans*ans;
-	if(e&1) ans *= x;
+	ll ans = 1LL; 
+	while(e){
+		if(e & 1LL)
+			ans = (ans*x)%MOD;
+		x =(x*x)%MOD;
+		e >>= 1;
+	}
 
-	return ans;
+	return ans;		
 }
 
 ll sumDiv(ll N) {

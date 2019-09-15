@@ -52,10 +52,7 @@ struct SegTreeLazy{
 	}
 
 	//Query: O(log(n)); call -> query(1, 1, n, a, b)
-	Node query(int node, int i, int j, int a, int b){
-		int l = (node<<1);
-		int r = l + 1;
-		
+	Node query(int node, int i, int j, int a, int b){		
 		upLazy(node, i, j);
 				
 		if( (i>b) or (j<a) )
@@ -66,15 +63,14 @@ struct SegTreeLazy{
 		}
 
 		int m = (i+j)/2;
+		int l = (node<<1);
+		int r = l + 1;
 		
 		return join( query(l, i, m, a, b), query(r, m+1, j, a, b) );
 	}
 
 	//Update: O(log(n)); call -> update(1, 1, n, a, b, value)
-	void update(int node, int i, int j, int a, int b, int value){
-		int l = (node<<1);
-		int r = l + 1;
-		
+	void update(int node, int i, int j, int a, int b, int value){		
 		upLazy(node, i, j);
 
 		if( (i>j) or (i>b) or (j<a) )
@@ -85,6 +81,8 @@ struct SegTreeLazy{
 			upLazy(node, i, j);
 		}else{
 			int m = (i+j)/2;
+			int l = (node<<1);
+			int r = l + 1;
 			
 			update(l, i, m, a, b, value);
 			update(r, m+1, j, a, b, value);		
@@ -93,16 +91,16 @@ struct SegTreeLazy{
 		}	
 	}
 	
-	void build(int _v[], int _n){
+	inline void build(int _v[], int _n){
 		n = _n;
 		v = _v;
 		build(1, 1, n);
 	}
 	
-	int query(int a, int b){
+	inline int query(int a, int b){
 		return query(1, 1, n, a, b);
 	}
-	void update(int a, int b, int value){
+	inline void update(int a, int b, int value){
 		update(1, 1, n, a, b, value);		
 	}
 	
