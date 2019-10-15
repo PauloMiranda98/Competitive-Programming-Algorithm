@@ -203,17 +203,14 @@ int main() {
 	ios_base::sync_with_stdio(false); 
 	cin.tie(NULL);
 	
-	vector<int> a;
-	vector<int> b;
-		
 	int na, nb;
 	cin >> na >> nb;
-	a.resize(na);
-	b.resize(nb);
+	vector<int> a(na), b(nb);		
+	
 	
 	for(int i=0; i<na; i++)
 		cin >> a[i];
-	for(int i=0; i<na; i++)
+	for(int i=0; i<nb; i++)
 		cin >> b[i];
 	
 	vector<ll> ans = multiply(a, b);
