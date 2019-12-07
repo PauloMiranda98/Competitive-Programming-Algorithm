@@ -10,7 +10,7 @@ struct UnionFind{
 	int anc[NUF], w[NUF], sz[NUF];
 
 	UnionFind(){
-		for(int i=1; i<NUF; i++){
+		for(int i=0; i<NUF; i++){
 			anc[i] = i;
 			w[i] = 1;
 			sz[i] = 1;
