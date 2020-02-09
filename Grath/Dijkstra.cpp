@@ -3,12 +3,12 @@
 using namespace std;
 
 typedef long long ll;
-typedef pair<ll, int> pii;
+typedef pair<ll, int> pli;
 
 const ll INFLL = 0x3f3f3f3f3f3f3f3fLL;
 const int MAXN = 200010;
 
-vector<pii> adj[MAXN];
+vector<pli> adj[MAXN];
 int n, m;
 ll dist[MAXN];
 int pai[MAXN];
@@ -20,8 +20,8 @@ void Dijkstra(int s){
 	}	
 	
 	dist[s] = 0;
-	priority_queue< pii, vector<pii>, greater<pii> > st;	
-	st.push(pii(dist[s], s));
+	priority_queue< pli, vector<pli>, greater<pli> > st;	
+	st.push(pli(dist[s], s));
 	
 	while(!st.empty()){
 		ll w = st.top().first;
@@ -29,13 +29,13 @@ void Dijkstra(int s){
 		st.pop();
 		if(w > dist[u])
 			continue;
-		for(pii p: adj[u]){
+		for(pli p: adj[u]){
 			ll edge = p.first;  
 			int to = p.second;
 			if(w+edge < dist[to]){
 				dist[to] = w + edge;
 				pai[to] = u;
-				st.push(pii(dist[to], to));
+				st.push(pli(dist[to], to));
 			}
 		}
 	}
@@ -51,8 +51,8 @@ int main(){
 		ll w;
 		cin >> a >> b >> w;
 		
-		adj[a].push_back(pii(w, b));
-		adj[b].push_back(pii(w, a));
+		adj[a].push_back(pli(w, b));
+		adj[b].push_back(pli(w, a));
 	}
 	
 	Dijkstra(1);
