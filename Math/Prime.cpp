@@ -119,7 +119,7 @@ ll numDiv(ll N) {
 	}
 	return (N != 1) ? 2*ans : ans;    
 }
-
+const int MOD = 1000000007;
 ll powFast(ll x, ll e){
 	ll ans = 1LL; 
 	while(e){

@@ -113,7 +113,7 @@ double area2(const vector<point2d> vp) {
     return fabs(res) / 2;
 }
 
-int signed_area_parallelogram(point2d p1, point2d p2, point2d p3) {
+ftype signed_area_parallelogram(point2d p1, point2d p2, point2d p3) {
     return cross(p2 - p1, p3 - p2);
 }
 
