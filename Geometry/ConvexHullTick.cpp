@@ -39,24 +39,11 @@ struct Line{
     ftype k, b;
     Line() {}
     Line(ftype k, ftype b): k(k), b(b) {}
-    
-    bool operator <(Line &t){
-		if(k == t.k)
-			return b > t.b;
-		return k < t.b;
-	}
 };
-
 
 struct ConvexHullTick{
 	vector<point2d> hull, vecs;
 	ConvexHullTick(){		
-	}
-	ConvexHullTick(vector<Line> v){
-		sort(v.begin(), v.end());
-		reverse(v.begin(), v.end()); //Max		
-		for(Line l : v)
-			add_line(l);
 	}
 		
 	void add_line(Line l) {

@@ -15,8 +15,8 @@ struct wavelet_tree{
 	wavelet_tree *l, *r;
 	vi b;
  
-	//nos are in range [x,y]
-	//array indices are [from, to)
+	//node are in range [x,y]
+	//array indices are [from, to[
 	wavelet_tree(int *from, int *to, int x, int y){
 		lo = x, hi = y;
 		if(lo == hi or from >= to) return;
@@ -45,7 +45,7 @@ struct wavelet_tree{
 		return this->r->kth(l-lb, r-rb, k-inLeft);
 	}
  
-	//count of nos in [l, r] Less than or equal to k
+	//count of node in [l, r] Less than or equal to k
 	int LTE(int l, int r, int k) {
 		if(l > r or k < lo) return 0;
 		if(hi <= k) return r - l + 1;
@@ -53,7 +53,7 @@ struct wavelet_tree{
 		return this->l->LTE(lb+1, rb, k) + this->r->LTE(l-lb, r-rb, k);
 	}
  
-	//count of nos in [l, r] equal to k
+	//count of node in [l, r] equal to k
 	int count(int l, int r, int k) {
 		if(l > r or k < lo or k > hi) return 0;
 		if(lo == hi) return r - l + 1;
